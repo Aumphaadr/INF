@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Перевод между системами — Информатика</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+  <a class="site" href="index.html">Информатика</a>
+  <h1 class="pagetitle">Перевод между системами счисления</h1>
+</header>
+
+<main class="content lesson">
+
+  <section class="block" id="ladder">
+    <h2>Столбик степеней</h2>
+    <p class="caption">
+      Прежде чем переводить, выписываем сбоку степени основания. Степень
+      в десятичной записи — это единица и столько же нулей в записи самой
+      системы: 2<sup>7</sup> = 128, а в двоичной это 10000000. Столбик и есть
+      весь «справочник» перевода.
+    </p>
+    <div class="tools">
+      <span class="hint">Основание</span>
+      <div class="cols" role="radiogroup" aria-label="Основание">
+        <label><input type="radio" name="ladder-base" value="2" checked><span>2</span></label>
+        <label><input type="radio" name="ladder-base" value="3"><span>3</span></label>
+        <label><input type="radio" name="ladder-base" value="4"><span>4</span></label>
+        <label><input type="radio" name="ladder-base" value="5"><span>5</span></label>
+        <label><input type="radio" name="ladder-base" value="6"><span>6</span></label>
+        <label><input type="radio" name="ladder-base" value="7"><span>7</span></label>
+        <label><input type="radio" name="ladder-base" value="8"><span>8</span></label>
+        <label><input type="radio" name="ladder-base" value="9"><span>9</span></label>
+        <label><input type="radio" name="ladder-base" value="10"><span>10</span></label>
+      </div>
+    </div>
+    <div data-mount="ladder"></div>
+  </section>
+
+  <section class="block" id="to-base">
+    <h2>Из десятичной</h2>
+    <p class="caption">
+      Три действия. Разбиваем число на слагаемые: берём самую большую
+      степень, которая влезает, вычитаем, повторяем с остатком. Переводим
+      каждое слагаемое по столбику. Складываем столбиком — переносов
+      не бывает. Ученик сам щёлкает нужную степень в столбике, «Шаг»
+      делает ход за него, «Всё» проходит лист до конца.
+    </p>
+    <div data-mount="to-base"></div>
+  </section>
+
+  <section class="block" id="to-decimal">
+    <h2>В десятичную</h2>
+    <p class="caption">
+      Те же три действия задом наперёд. Разбиваем запись по разрядам:
+      каждая ненулевая цифра — слагаемое. Переводим каждое по столбику.
+      Складываем в десятичной.
+    </p>
+    <div data-mount="to-decimal"></div>
+  </section>
+
+</main>
+
+<nav class="sidebar" data-open="0" aria-label="Уроки"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/lesson-base-conversion.js"></script>
+</body>
+</html>

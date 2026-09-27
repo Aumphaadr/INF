@@ -1,0 +1,458 @@
+@import url('tokens.css');
+
+/* ============ Каркас ============ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Компоненты прячут части атрибутом hidden. Правило с display у класса
+   перебило бы его — поэтому здесь !important. */
+[hidden] { display: none !important; }
+
+html { background: var(--c-bg); color: var(--c-text); font: 15px/1.5 var(--font-ui); }
+body { margin: 0; min-height: 100vh; }
+
+* { scrollbar-color: var(--c-border-strong) var(--c-bg); }
+
+a { color: var(--c-accent); }
+sub, sup { font-size: .62em; line-height: 0; }
+
+/* ============ Шапка ============ */
+
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; gap: 14px;
+  height: var(--header-height);
+  padding: 0 14px;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border-strong);
+}
+
+.burger {
+  width: 34px; height: 34px; flex: none;
+  display: grid; place-items: center;
+  background: none; border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  color: var(--c-text); cursor: pointer; font-size: 16px;
+}
+.burger:hover { background: var(--c-hover); border-color: var(--c-border-strong); }
+
+.site { color: var(--c-text-muted); text-decoration: none; font-size: var(--fs-ui); white-space: nowrap; }
+.site:hover { color: var(--c-accent); }
+.site::after { content: '/'; margin-left: 14px; color: var(--c-text-dim); }
+
+.pagetitle { margin: 0; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ============ Боковое меню ============ */
+
+.sidebar {
+  position: fixed; z-index: 50; inset: 0 auto 0 0;
+  width: var(--sidebar-width); max-width: 88vw; padding: 18px; overflow: auto;
+  background: var(--c-surface); border-right: 1px solid var(--c-border-strong);
+  transform: translateX(-100%); transition: transform .18s ease;
+}
+.sidebar[data-open="1"] { transform: none; }
+.sidebar h3 { margin: 0 0 14px; font-size: 15px; }
+.sidebar .pages { list-style: none; margin: 0; padding: 0; }
+.sidebar .pages li { margin-bottom: 4px; }
+.sidebar .pages a, .sidebar .pages .soon {
+  display: block; padding: 7px 10px; border-radius: var(--radius-sm);
+  color: var(--c-text); text-decoration: none;
+}
+.sidebar .pages a:hover { background: var(--c-hover); }
+.sidebar .pages a:focus-visible { outline: 2px solid var(--c-accent-dim); outline-offset: -2px; }
+.sidebar .pages a.cur { background: var(--c-accent-subtle); }
+.sidebar .pages a.cur .t { color: var(--c-accent); }
+.sidebar .pages .soon { opacity: .5; cursor: default; }
+.sidebar .pages .t { display: block; font-size: 14px; }
+.sidebar .pages .note { display: block; margin-top: 3px; color: var(--c-text-dim); font-size: var(--fs-ui); }
+
+.scrim { position: fixed; inset: 0; z-index: 45; background: rgb(0 0 0 / 45%); }
+
+/* ============ Содержимое ============ */
+
+.content { max-width: var(--content-width); margin: 0 auto; padding: 28px 20px 96px; }
+
+.lesson > h1 { margin: 0 0 6px; font-size: 28px; }
+.lesson > .lead { margin: 0; color: var(--c-text-muted); max-width: 70ch; }
+
+.block { margin-top: 48px; }
+.block h2 { margin: 0 0 6px; font-size: 20px; }
+.block .caption { margin: 0 0 14px; color: var(--c-text-muted); max-width: 78ch; }
+
+/* Полоса управления над инструментом: переключатели, кнопки, подсказка. */
+.tools { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin: 0 0 12px; }
+.tools .hint { color: var(--c-text-dim); font-size: var(--fs-ui); }
+
+.chk {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;
+  color: var(--c-text-muted); font-size: var(--fs-ui);
+}
+.chk:hover { color: var(--c-text); }
+.chk input { margin: 0; accent-color: var(--c-accent); }
+.chk:has(input:checked) { color: var(--c-text); }
+
+.seg { display: flex; border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm); overflow: hidden; }
+.seg button {
+  padding: 5px 12px; background: none; border: 0; cursor: pointer;
+  color: var(--c-text-muted); font: inherit; font-size: var(--fs-ui); white-space: nowrap;
+}
+.seg button + button { border-left: 1px solid var(--c-border-strong); }
+.seg button:hover { background: var(--c-hover); color: var(--c-text); }
+.seg button[aria-pressed="true"] { background: var(--c-accent-subtle); color: var(--c-accent); }
+
+/* Чипы-галочки: какие столбцы показывать. Сам чекбокс спрятан, кликается
+   и подсвечивается вся плашка. */
+.cols { display: flex; gap: 4px; flex-wrap: wrap; }
+.cols label {
+  position: relative; min-width: 36px; padding: 4px 9px; text-align: center;
+  cursor: pointer; user-select: none;
+  border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  color: var(--c-text-muted); font: 14px/1.4 var(--font-num);
+}
+.cols label:hover { background: var(--c-hover); }
+.cols input { position: absolute; opacity: 0; pointer-events: none; }
+.cols label:has(input:checked) { border-color: var(--c-accent-dim); background: var(--c-accent-subtle); color: var(--c-accent); }
+.cols label:has(input:disabled) { cursor: default; }
+.cols label:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
+/* Обычная кнопка. */
+.act {
+  padding: 6px 14px; cursor: pointer;
+  background: var(--c-elevated); color: var(--c-text);
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm);
+  font: inherit; font-size: var(--fs-ui); white-space: nowrap;
+}
+.act:hover { border-color: var(--c-accent-dim); background: var(--c-hover); }
+.act:active { transform: translateY(1px); }
+.act:disabled { opacity: .45; cursor: default; transform: none; }
+.act.mini { padding: 3px 9px; font-size: 13px; }
+.act:focus-visible, .wheel:focus-visible, .burger:focus-visible, .seg button:focus-visible {
+  outline: 2px solid var(--c-accent); outline-offset: 2px;
+}
+
+/* ============ Составитель чисел ============ */
+
+.composer {
+  --wheel-w: 66px; --wheel-h: 86px; --wheel-fs: 42px; --wheel-gap: 8px;
+  width: fit-content; max-width: 100%;
+  padding: 14px 18px 16px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border); border-radius: var(--radius-md);
+}
+.composer.compact {
+  --wheel-w: 46px; --wheel-h: 62px; --wheel-fs: 28px; --wheel-gap: 6px;
+  width: auto; padding: 12px 14px 14px;
+}
+.composer.overflow { animation: overflow .7s ease-out; }
+
+.c-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+.c-name { font-weight: 600; font-size: 16px; }
+.c-base { color: var(--c-text-dim); font-size: var(--fs-ui); white-space: nowrap; }
+
+/* Алфавит системы — на виду всегда: «цифр стало меньше» должно читаться
+   с первого взгляда, ещё до того, как ученик начал крутить барабаны. */
+.c-alphabet { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 14px; }
+.c-alphabet::before { content: 'цифры'; margin-right: 6px; color: var(--c-text-dim); font-size: var(--fs-ui); }
+.c-alphabet span {
+  min-width: 22px; padding: 1px 5px; text-align: center;
+  border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  font: 13px/1.5 var(--font-num); color: var(--c-text-muted);
+}
+
+/* Барабаны и веса под ними — одна сетка, чтобы вес стоял ровно под своим
+   разрядом при любом размере. */
+.c-wheels, .c-weights {
+  display: grid; grid-template-columns: repeat(var(--width), var(--wheel-w));
+  gap: var(--wheel-gap); width: max-content; max-width: 100%;
+}
+
+.wheel {
+  width: var(--wheel-w); height: var(--wheel-h); padding: 0;
+  font: 600 var(--wheel-fs)/1 var(--font-num);
+  color: var(--c-text);
+  background-color: var(--c-elevated);
+  /* Блик сверху и тень снизу — намёк на цилиндр счётчика. */
+  background-image: linear-gradient(rgb(255 255 255 / 7%), transparent 35%, transparent 65%, rgb(0 0 0 / 24%));
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-md);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 40%);
+  cursor: pointer; user-select: none; touch-action: manipulation;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.wheel:hover { border-color: var(--c-accent-dim); }
+.wheel:active { transform: translateY(1px); box-shadow: 0 1px 0 rgb(0 0 0 / 40%); }
+.wheel.lead { color: var(--c-text-dim); }
+.wheel.tick { animation: tick .4s ease-out; }
+.wheel.wrap { animation: wrap .6s ease-out; }
+
+@keyframes tick {
+  0% { background-color: var(--c-accent-subtle); border-color: var(--c-accent-dim); }
+}
+@keyframes wrap {
+  0%, 45% { background-color: var(--c-accent); border-color: var(--c-accent); color: var(--c-bg); }
+}
+@keyframes overflow {
+  0%, 40% { box-shadow: 0 0 0 3px var(--c-accent); border-color: var(--c-accent); }
+}
+
+.c-weights { margin-top: 6px; }
+.c-weights .wt { text-align: center; font: 13px/1.35 var(--font-num); color: var(--c-text); }
+.c-weights .wt b, .c-weights .wt i { display: block; font-style: normal; font-weight: 500; }
+.c-weights .wt i { color: var(--c-text-muted); }
+.composer.compact .c-weights .wt { font-size: 11px; }
+
+/* Двоичные группы под разрядами: та же сетка, что у барабанов. */
+.c-bits { display: grid; grid-template-columns: repeat(var(--width), var(--wheel-w)); gap: var(--wheel-gap); margin-top: 6px; width: max-content; max-width: 100%; }
+.c-bits .bt { text-align: center; font: 600 13px/1.4 var(--font-num); color: var(--c-accent); letter-spacing: .04em; }
+.c-bits .bt.lead { color: var(--c-text-dim); font-weight: 400; }
+.composer.compact .c-bits .bt { font-size: 11px; letter-spacing: .02em; }
+.c-bitline { margin: 10px 0 0; font: 14px/1.6 var(--font-num); color: var(--c-text-muted); overflow-wrap: anywhere; }
+.c-bitline .num, .c-bitline .val { color: var(--c-text); font-weight: 600; }
+.composer.compact .c-bitline { font-size: 12px; }
+
+.c-expansion { margin: 12px 0 0; font: 14px/1.6 var(--font-num); color: var(--c-text-muted); overflow-wrap: anywhere; }
+.c-expansion .num, .c-expansion .val, .bs-expansion .num, .bs-expansion .val { color: var(--c-text); font-weight: 600; }
+.composer.compact .c-expansion { font-size: 12px; }
+
+.c-foot { display: flex; gap: 8px; margin-top: 14px; }
+.c-foot button {
+  min-width: 52px; padding: 6px 12px; cursor: pointer;
+  background: var(--c-elevated); color: var(--c-text);
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm);
+  font: 600 15px/1.4 var(--font-num);
+}
+.c-foot button:hover { border-color: var(--c-accent-dim); background: var(--c-hover); }
+.c-foot button:active { transform: translateY(1px); }
+.c-foot button:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+.c-foot .c-reset { margin-left: auto; font: 14px/1.5 var(--font-ui); color: var(--c-text-muted); }
+
+.composers { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+
+/* ============ Сравнительная таблица ============ */
+
+.basetable table {
+  border-collapse: separate; border-spacing: 0;
+  font-family: var(--font-num);
+}
+.basetable th, .basetable td {
+  padding: 3px 14px; text-align: right;
+  border-bottom: 1px solid var(--c-border);
+  font-variant-numeric: tabular-nums;
+}
+.basetable th {
+  position: sticky; top: var(--header-height); z-index: 1;
+  padding: 8px 14px 6px; vertical-align: bottom;
+  background: var(--c-surface); border-bottom: 1px solid var(--c-border-strong);
+  font-weight: 600;
+}
+.basetable th b { display: block; font-size: 17px; }
+.basetable th small { display: block; font: 11px/1.4 var(--font-ui); color: var(--c-text-dim); }
+.basetable td { color: var(--c-text); }
+.basetable td.round { color: var(--c-accent); font-weight: 700; }
+.basetable .fam { background: var(--c-familiar); }
+.basetable th.fam { background: color-mix(in srgb, var(--c-familiar), var(--c-surface)); }
+.basetable th.fam b { color: var(--c-accent); }
+
+/* Раскраска по числу разрядов: чем длиннее запись, тем гуще. Диагональные
+   полосы через таблицу — самая наглядная картинка непрерывности: в каждой
+   системе то же самое, только своим шагом. */
+.basetable.tint td { background-color: color-mix(in srgb, var(--c-accent) calc(var(--len) * 9% - 9%), transparent); }
+.basetable tbody tr:hover td { background-color: var(--c-hover); }
+.basetable tbody tr.pin td { background-color: var(--c-accent-subtle); box-shadow: inset 0 1px 0 var(--c-accent-dim), inset 0 -1px 0 var(--c-accent-dim); }
+.basetable tbody tr { cursor: pointer; }
+
+/* ============ Одно число — разные основания ============ */
+
+.baseslider {
+  padding: 16px 18px 18px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border); border-radius: var(--radius-md);
+}
+.bs-controls { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 18px; }
+.lbl { display: block; margin-bottom: 6px; color: var(--c-text-dim); font-size: var(--fs-ui); }
+
+.bs-value { display: grid; grid-template-columns: auto auto auto; align-items: center; gap: 6px; }
+.bs-value .lbl { grid-column: 1 / -1; }
+.bs-value input {
+  width: 120px; padding: 4px 8px; text-align: right;
+  font: 600 20px/1.4 var(--font-num);
+  background: var(--c-bg); color: var(--c-text);
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm);
+}
+.bs-value input:focus { outline: none; border-color: var(--c-accent-dim); }
+.bs-value .act { font: 600 15px/1.4 var(--font-num); }
+
+.bs-base { flex: 1; min-width: 280px; }
+.bs-base input[type=range] { display: block; width: 100%; margin: 6px 0 2px; accent-color: var(--c-accent); }
+.bs-ticks { display: flex; justify-content: space-between; padding: 0 2px; }
+.bs-ticks button {
+  width: 26px; padding: 2px 0; background: none; border: 0; cursor: pointer;
+  color: var(--c-text-muted); font: 14px/1.4 var(--font-num); border-radius: var(--radius-sm);
+}
+.bs-ticks button:hover { color: var(--c-text); background: var(--c-hover); }
+.bs-ticks button[aria-pressed="true"] { color: var(--c-accent); font-weight: 700; }
+
+.bs-name { margin-bottom: 10px; font-weight: 600; font-size: 16px; }
+.bs-name .c-base { margin-left: 8px; font-weight: 400; }
+.bs-digits { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.bs-d { display: grid; justify-items: center; gap: 3px; }
+.bs-d b {
+  min-width: 56px; padding: 8px 8px; text-align: center;
+  font: 600 40px/1.1 var(--font-num); color: var(--c-text);
+  background-color: var(--c-elevated);
+  background-image: linear-gradient(rgb(255 255 255 / 7%), transparent 35%, transparent 65%, rgb(0 0 0 / 24%));
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-md);
+}
+.bs-d i { font: 13px/1.35 var(--font-num); font-style: normal; color: var(--c-text); }
+.bs-d i + i { color: var(--c-text-muted); }
+.bs-expansion { margin: 12px 0 0; font: 14px/1.6 var(--font-num); color: var(--c-text-muted); overflow-wrap: anywhere; }
+
+/* ============ Алфавиты систем ============ */
+
+.alphabets table { border-collapse: separate; border-spacing: 0; }
+.alphabets th, .alphabets td { padding: 5px 12px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--c-border); }
+.alphabets thead th { padding-bottom: 6px; font: 600 11px/1.4 var(--font-ui); color: var(--c-text-dim); }
+.alphabets tbody th { font: 600 16px/1.4 var(--font-num); text-align: right; }
+.alphabets .nm { color: var(--c-text-muted); white-space: nowrap; }
+.alphabets .digits { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.alphabets .digit {
+  min-width: 24px; padding: 1px 5px; text-align: center;
+  border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  font: 13px/1.5 var(--font-num); color: var(--c-text-muted);
+}
+/* Буквы — те же цифры, только новые: подсвечены, под каждой её значение. */
+.alphabets .digit.letter {
+  padding: 2px 5px 1px; line-height: 1.15;
+  border-color: var(--c-accent-dim); background: var(--c-accent-subtle); color: var(--c-accent);
+}
+.alphabets .digit.letter b { display: block; font-weight: 700; }
+.alphabets .digit.letter i { display: block; font-style: normal; font-size: 10px; color: var(--c-text-muted); }
+.alphabets tr.fam th, .alphabets tr.fam td { background: var(--c-familiar); }
+
+/* ============ Цвет в шестнадцатеричной ============ */
+
+.colormix { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; }
+.colormix .swatch {
+  width: 160px; height: 160px; border-radius: var(--radius-md);
+  border: 1px solid var(--c-border-strong); box-shadow: inset 0 0 0 1px rgb(0 0 0 / 25%);
+}
+.colormix .code { margin: 10px 0 0; font: 700 18px/1.5 var(--font-num); }
+.colormix .code small { display: block; font-weight: 400; font-size: 14px; color: var(--c-text-muted); }
+.colormix .parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px; }
+
+/* ============ Столбик степеней ============ */
+
+.ladder table { border-collapse: separate; border-spacing: 0; font-family: var(--font-num); }
+.ladder th, .ladder td {
+  padding: 3px 12px; text-align: right; white-space: nowrap;
+  border-bottom: 1px solid var(--c-border); font-variant-numeric: tabular-nums;
+}
+.ladder th { padding-bottom: 6px; font: 600 11px/1.4 var(--font-ui); color: var(--c-text-dim); }
+.ladder td.pw { color: var(--c-text-muted); }
+.ladder td.sp { color: var(--c-text); }
+.ladder td.mk { padding-left: 4px; padding-right: 6px; text-align: left; width: 34px; }
+.ladder.clickable tbody tr { cursor: pointer; }
+.ladder.clickable tbody tr:hover td { background-color: var(--c-hover); }
+.ladder tbody tr:focus-visible { outline: 2px solid var(--c-accent); outline-offset: -2px; }
+.ladder tr.used td { background-color: var(--c-accent-subtle); }
+.ladder tr.used td.dec, .ladder tr.used td.sp { color: var(--c-accent); font-weight: 700; }
+.ladder .badge {
+  display: inline-block; min-width: 1.7em; padding: 0 5px; border-radius: 9px;
+  background: var(--c-accent-dim); color: var(--c-bg);
+  font: 700 11px/1.5 var(--font-num); text-align: center;
+}
+.ladder tr.ok td { animation: ladder-ok .6s ease-out; }
+.ladder tr.bad td { animation: ladder-bad .6s ease-out; }
+.ladder tr.warn td { animation: ladder-warn .6s ease-out; }
+@keyframes ladder-ok { 0%, 40% { background-color: var(--c-good); color: var(--c-bg); } }
+@keyframes ladder-bad { 0%, 40% { background-color: var(--c-bad); color: var(--c-bg); } }
+@keyframes ladder-warn { 0%, 40% { background-color: var(--c-accent); color: var(--c-bg); } }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ============ Переводчики ============ */
+
+.conv {
+  padding: 16px 18px 18px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border); border-radius: var(--radius-md);
+}
+.conv .tools { margin-bottom: 10px; align-items: flex-end; }
+.cv-field { display: inline-flex; flex-direction: column; gap: 4px; }
+.cv-field .lbl, .cv-bases .lbl { margin: 0 0 2px; }
+.cv-field input {
+  width: 170px; padding: 4px 8px; text-align: right;
+  font: 600 20px/1.4 var(--font-num);
+  background: var(--c-bg); color: var(--c-text);
+  border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm);
+}
+.cv-field input:focus { outline: none; border-color: var(--c-accent-dim); }
+.cv-error { color: var(--c-bad); }
+.cv-body { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: start; margin-top: 6px; }
+
+/* Рабочий лист: строки действий, столбик сложения, подсказка внизу. */
+.ws { min-height: 120px; min-width: 0; }
+.ws h4 { margin: 16px 0 6px; font-size: 14px; font-weight: 600; color: var(--c-text-muted); }
+.ws h4:first-child { margin-top: 0; }
+.ws-line { margin: 0 0 4px; font: 15px/1.6 var(--font-num); overflow-wrap: anywhere; }
+.ws-line b { color: var(--c-accent); font-weight: 700; }
+.ws-line.ws-strong { color: var(--c-text); font-weight: 600; }
+.ws-result { margin-top: 12px; font-size: 18px; font-weight: 700; }
+/* Как в тетради: слагаемые по правому краю, плюс у левого края перед
+   последним, черта на всю ширину, итог под чертой. */
+.ws-sum { display: inline-grid; justify-items: stretch; margin: 2px 0 6px 1.6em; font: 15px/1.6 var(--font-num); }
+.ws-sum .r, .ws-sum .t { text-align: right; padding: 0 6px; }
+/* Последнее слагаемое — предпоследний ребёнок: последним идёт итог. */
+.ws-sum .r:nth-last-child(2) { position: relative; }
+.ws-sum .r:nth-last-child(2)::before { content: '+'; position: absolute; left: -1.3em; color: var(--c-text-muted); }
+.ws-sum .t { margin-top: 2px; padding-top: 2px; border-top: 2px solid var(--c-border-strong); color: var(--c-accent); font-weight: 700; }
+.ws-prompt {
+  margin: 14px 0 0; padding: 8px 12px;
+  border-left: 3px solid var(--c-accent-dim);
+  color: var(--c-text-muted); font-size: var(--fs-ui);
+}
+.ws-prompt b { color: var(--c-text); font: 600 17px/1.4 var(--font-num); }
+.ws-prompt .note { display: block; margin-top: 4px; font-weight: 600; }
+.ws-prompt .note.bad { color: var(--c-bad); }
+.ws-prompt .note.warn { color: var(--c-accent); }
+.ws-prompt .note.ok { color: var(--c-good); }
+.cv-continue { margin-top: 10px; }
+
+/* ============ Главная ============ */
+
+.home h1 { margin: 0 0 8px; font-size: 28px; }
+.home .lead { margin: 0 0 28px; color: var(--c-text-muted); max-width: 70ch; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.card {
+  display: flex; flex-direction: column; padding: 18px;
+  background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-md);
+  color: inherit; text-decoration: none;
+}
+.card:hover { background: var(--c-elevated); border-color: var(--c-accent-dim); }
+.card:focus-visible { outline: 2px solid var(--c-accent-dim); outline-offset: 2px; }
+.card h3 { margin: 0 0 8px; font-size: 17px; }
+.card p { margin: 0 0 14px; color: var(--c-text-muted); font-size: 14px; line-height: 1.6; }
+.card .go { margin-top: auto; color: var(--c-accent); font-size: 14px; }
+.card.soon { opacity: .55; }
+.card.soon .go { color: var(--c-text-dim); }
+
+/* ============ Узкие экраны ============ */
+
+@media (max-width: 720px) {
+  .site { display: none; }
+  .content { padding: 20px 16px 72px; }
+  .composer { --wheel-w: 52px; --wheel-h: 70px; --wheel-fs: 32px; --wheel-gap: 6px; }
+  /* На узком экране таблице даём горизонтальную прокрутку. Ценой липкой
+     шапки: она липнет к ближайшему прокручиваемому предку, а им становится
+     обёртка. На проекторе и ноутбуке шапка остаётся липкой. */
+  .bt-scroll { overflow-x: auto; }
+  .basetable th { position: static; }
+  .cv-body { grid-template-columns: 1fr; }
+  .cv-ladder { overflow-x: auto; }
+  .colormix { grid-template-columns: 1fr; }
+  .alphabets { overflow-x: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { transition: none; }
+  .wheel.tick, .wheel.wrap, .composer.overflow,
+  .ladder tr.ok td, .ladder tr.bad td, .ladder tr.warn td { animation-duration: .01s; }
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Системы счисления — Информатика</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+  <a class="site" href="index.html">Информатика</a>
+  <h1 class="pagetitle">Системы счисления</h1>
+</header>
+
+<main class="content lesson">
+
+  <section class="block" id="decimal">
+    <h2>Десятичная система</h2>
+    <p class="caption">
+      Пять разрядов, в каждом — своё колесо из десяти цифр. Щелчок по разряду —
+      следующая цифра, правый щелчок или колесо мыши — предыдущая.
+      Кнопки «+1» и «−1» считают по-настоящему, с переносом.
+    </p>
+    <div class="tools">
+      <label class="chk"><input type="checkbox" data-weights> <span>Показывать вес разрядов</span></label>
+    </div>
+    <div data-mount="composer-10"></div>
+  </section>
+
+  <section class="block" id="quinary">
+    <h2>Пятеричная система</h2>
+    <p class="caption">
+      Тот же инструмент, только цифр пять: 0, 1, 2, 3, 4. После четвёрки
+      колесо возвращается к нулю, а счёт идёт дальше — в соседний разряд.
+    </p>
+    <div class="tools">
+      <label class="chk"><input type="checkbox" data-weights> <span>Показывать вес разрядов</span></label>
+    </div>
+    <div data-mount="composer-5"></div>
+  </section>
+
+  <section class="block" id="all-bases">
+    <h2>От двоичной до десятичной</h2>
+    <p class="caption">
+      Один и тот же инструмент для каждого основания. От системы к системе
+      меняется только длина алфавита — правила те же.
+    </p>
+    <div class="tools">
+      <label class="chk"><input type="checkbox" data-weights> <span>Показывать вес разрядов</span></label>
+    </div>
+    <div data-mount="composers-all"></div>
+  </section>
+
+  <section class="block" id="table">
+    <h2>Сравнительная таблица</h2>
+    <p class="caption">
+      Каждая строка — одно и то же число, каждый столбец — одна система.
+      Круглые числа системы (10, 100, 1000 в её записи) выделены цветом.
+    </p>
+    <div data-mount="basetable"></div>
+  </section>
+
+  <section class="block" id="one-number">
+    <h2>Одно число — разные основания</h2>
+    <p class="caption">
+      Число стоит на месте, меняется только основание записи. Под каждым
+      разрядом — его вес; сумма произведений возвращает то же самое число.
+    </p>
+    <div data-mount="baseslider"></div>
+  </section>
+
+</main>
+
+<nav class="sidebar" data-open="0" aria-label="Уроки"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/lesson-numeral-systems.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "inf",
+  "private": true,
+  "type": "module",
+  "description": "Материалы к занятиям по информатике — статический сайт без сборки",
+  "scripts": {
+    "check": "node tools/selfcheck.mjs",
+    "serve": "python3 -m http.server 8080"
+  }
+}

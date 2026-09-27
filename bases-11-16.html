@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Системы от 11-чной до 16-чной — Информатика</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+  <a class="site" href="index.html">Информатика</a>
+  <h1 class="pagetitle">Системы от 11-чной до 16-чной</h1>
+</header>
+
+<main class="content lesson">
+
+  <section class="block" id="alphabets">
+    <h2>Алфавиты систем</h2>
+    <p class="caption">
+      У каждой системы ровно столько цифр, каково основание. После девятки
+      привычные знаки кончаются, и дальше договорились писать буквы:
+      A = 10, B = 11, C = 12, D = 13, E = 14, F = 15. Ряд не прерывается —
+      просто цифры теперь выглядят иначе.
+    </p>
+    <div data-mount="alphabets"></div>
+  </section>
+
+  <section class="block" id="undecimal">
+    <h2>Одиннадцатеричная система</h2>
+    <p class="caption">
+      Тот же составитель, что и раньше, только цифр одиннадцать: после
+      девятки идёт A, и лишь потом колесо возвращается к нулю. Буквы можно
+      набирать и с клавиатуры.
+    </p>
+    <div class="tools">
+      <label class="chk"><input type="checkbox" data-weights> <span>Показывать вес разрядов</span></label>
+    </div>
+    <div data-mount="composer-11"></div>
+  </section>
+
+  <section class="block" id="all-bases">
+    <h2>От одиннадцатеричной до шестнадцатеричной</h2>
+    <p class="caption">
+      Каждая следующая система добавляет одну букву. Шестнадцатеричная —
+      просто та, где букв шесть.
+    </p>
+    <div class="tools">
+      <label class="chk"><input type="checkbox" data-weights> <span>Показывать вес разрядов</span></label>
+    </div>
+    <div data-mount="composers-all"></div>
+  </section>
+
+  <section class="block" id="table">
+    <h2>Сравнительная таблица</h2>
+    <p class="caption">
+      Каждая строка — одно число, каждый столбец — одна система. Двоичная
+      и восьмеричная выключены, но включаются чипами — пригодятся ниже.
+    </p>
+    <div data-mount="basetable"></div>
+  </section>
+
+  <section class="block" id="one-number">
+    <h2>Одно число — разные основания</h2>
+    <p class="caption">
+      Число стоит на месте, основание идёт от двух до шестнадцати. Чем больше
+      основание, тем короче запись — и тем больше нужно цифр.
+    </p>
+    <div data-mount="baseslider"></div>
+  </section>
+
+  <section class="block" id="bits">
+    <h2>По две, три и четыре двоичные цифры</h2>
+    <p class="caption">
+      16 = 2<sup>4</sup>, поэтому одна шестнадцатеричная цифра — ровно четыре
+      двоичные, всегда. 8 = 2<sup>3</sup> — по три, 4 = 2<sup>2</sup> — по две.
+      Перевод в двоичную и обратно идёт по разрядам, без вычислений. Десятичная
+      так не умеет: 10 — не степень двойки. Поэтому в информатике прижились
+      именно восьмеричная и шестнадцатеричная.
+    </p>
+    <div data-mount="bits"></div>
+  </section>
+
+  <section class="block" id="color">
+    <h2>Цвет в шестнадцатеричной</h2>
+    <p class="caption">
+      Цвет на экране — три числа от 0 до 255: сколько красного, зелёного
+      и синего. Каждое число — один байт, то есть две шестнадцатеричные
+      цифры. Так и получается запись вида #FFC456.
+    </p>
+    <div data-mount="colormix"></div>
+  </section>
+
+</main>
+
+<nav class="sidebar" data-open="0" aria-label="Уроки"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/lesson-bases-11-16.js"></script>
+</body>
+</html>

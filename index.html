@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Информатика</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Меню" aria-expanded="false">☰</button>
+  <h1 class="pagetitle">Информатика</h1>
+</header>
+
+<main class="content home">
+  <h1>Материалы к занятиям</h1>
+  <p class="lead">
+    Интерактивные инструменты к урокам информатики: не тезисы, а вещи,
+    которые можно покрутить руками и увидеть, как они устроены.
+  </p>
+
+  <nav class="cards" aria-label="Уроки">
+    <a class="card" href="numeral-systems.html">
+      <h3>Системы счисления</h3>
+      <p>
+        Составители чисел для оснований от двух до десяти, сравнительная
+        таблица и ползунок, который перестраивает одно число из системы
+        в систему.
+      </p>
+      <span class="go">Открыть →</span>
+    </a>
+    <a class="card" href="base-conversion.html">
+      <h3>Перевод между системами</h3>
+      <p>
+        Столбик степеней, разбивка числа на слагаемые, перевод каждого
+        и сложение без переносов. Обратный путь зеркален. Никаких остатков
+        от деления.
+      </p>
+      <span class="go">Открыть →</span>
+    </a>
+    <a class="card" href="bases-11-16.html">
+      <h3>Системы от 11-чной до 16-чной</h3>
+      <p>
+        После девятки цифры кончаются, и в ход идут буквы. Алфавиты систем,
+        составители с буквами, шестнадцатеричная как двоичная по четыре
+        разряда и цвет вида #FFC456.
+      </p>
+      <span class="go">Открыть →</span>
+    </a>
+    <span class="card soon">
+      <h3>Диаграммы Венна</h3>
+      <p>В планах.</p>
+      <span class="go">скоро</span>
+    </span>
+    <span class="card soon">
+      <h3>Предикаты и кванторы</h3>
+      <p>В планах.</p>
+      <span class="go">скоро</span>
+    </span>
+    <span class="card soon">
+      <h3>Таблицы истинности</h3>
+      <p>В планах.</p>
+      <span class="go">скоро</span>
+    </span>
+  </nav>
+</main>
+
+<nav class="sidebar" data-open="0" aria-label="Уроки"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/home.js"></script>
+</body>
+</html>
