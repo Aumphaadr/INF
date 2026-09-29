@@ -3,6 +3,19 @@
   "private": true,
   "type": "module",
   "description": "Материалы к занятиям по информатике — статический сайт без сборки",
+  "license": "MIT",
+  "author": "Aumphaadr",
+  "homepage": "https://aumphaadr.github.io/INF/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aumphaadr/INF.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aumphaadr/INF/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "check": "node tools/selfcheck.mjs",
     "serve": "python3 -m http.server 8080"
